@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "jenkins-app:build-${BUILD_NUMBER}"
-        CONTAINER_NAME = "jenkins-app"
+        CONTAINER_NAME = "mlops-container"
     }
 
     stages {
