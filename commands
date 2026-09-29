@@ -57,3 +57,67 @@ git branch feature/mlops
 git switch feature/student-search
 
 git fetch origin
+
+
+
+echo Starting deployment...
+
+if exist "C:\inetpub\wwwroot\index.html" del /Q "C:\inetpub\wwwroot\index.html"
+if exist "C:\inetpub\wwwroot\style.css" del /Q "C:\inetpub\wwwroot\style.css"
+if exist "C:\inetpub\wwwroot\script.js" del /Q "C:\inetpub\wwwroot\script.js"
+
+copy /Y "%WORKSPACE%\index.html" "C:\inetpub\wwwroot\index.html"
+copy /Y "%WORKSPACE%\style.css" "C:\inetpub\wwwroot\style.css"
+copy /Y "%WORKSPACE%\script.js" "C:\inetpub\wwwroot\script.js"
+
+echo Deployment completed successfully.
+
+
+
+
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/USERNAME/student-result-app.git'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'echo Testing Student Result Application'
+                bat 'if not exist index.html exit /b 1'
+                bat 'if not exist style.css exit /b 1'
+                bat 'if not exist script.js exit /b 1'
+                bat 'echo Test Passed'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t student-result-app .'
+            }
+        }
+
+        stage('Deploy Container') {
+            steps {
+                bat 'docker stop student-result-container 2>NUL || exit 0'
+                bat 'docker rm student-result-container 2>NUL || exit 0'
+                bat 'docker run -d --name student-result-container -p 8081:80 student-result-app'
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                bat 'docker ps'
+                bat 'docker inspect student-result-container'
+                bat 'echo Deployment Verified Successfully'
+            }
+        }
+    }
+}
