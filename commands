@@ -1,0 +1,33 @@
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Amirthavarshini05/mlops1.git
+git push -u origin main
+
+
+Your Project
+     ↓
+git init
+     ↓
+Git repository created
+     ↓
+git add .
+     ↓
+Files staged
+     ↓
+git commit -m ""
+     ↓
+Snapshot created
+     ↓
+git branch -M main
+     ↓
+Branch named main
+     ↓
+git remote add origin
+     ↓
+GitHub repository connected
+     ↓
+git push -u origin main
+     ↓
+Code uploaded to GitHub

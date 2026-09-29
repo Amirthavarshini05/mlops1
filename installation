@@ -1,0 +1,9 @@
+https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.1/Git-2.56.0-64-bit.exe
+
+https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module&_gl=1*1dr3xm7*_gcl_au*MjE0MTMyMDg2MS4xNzg4OTM3NTk1LjEzMDU2NzE5MDkuMTc4ODkzNzU5OS4xNzg4OTM3NjI1LjM4NzE0ODkwOC4xNzg4OTM3NTk5LjE3ODg5Mzc2MjU.*_ga*OTY2MjYxOTY3LjE3ODg5Mzc1OTU.*_ga_XJWPQMJYHQ*czE3OTA2ODg5MzEkbzIkZzEkdDE3OTA2ODg5MzckajU0JGwwJGgw
+
+=> Use WSL 2 instead of Hyper-V
+
+https://adoptium.net/download?link=https%3A%2F%2Fgithub.com%2Fadoptium%2Ftemurin21-binaries%2Freleases%2Fdownload%2Fjdk-21.0.12.1%252B1%2FOpenJDK21U-jdk_x64_windows_hotspot_21.0.12.1_1.msi&vendor=Adoptium
+
+https://www.jenkins.io/download/thank-you-downloading-windows-installer-stable
