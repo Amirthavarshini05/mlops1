@@ -43,3 +43,8 @@ docker build -t mlops1 .
 docker stop mlops-container 2>NUL
 docker rm mlops-container 2>NUL
 docker run -d --name mlops-container -p 8081:80 mlops1
+
+
+where.exe docker
+
+Restart-Service Jenkins
