@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/USERNAME/jenkins-docker-app.git'
+                    url: 'https://github.com/Amirthavarshini05/mlops1.git'
             }
         }
 
