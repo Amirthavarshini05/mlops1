@@ -121,3 +121,99 @@ pipeline {
         }
     }
 }
+
+git tag -a v1.0 -m "Release version 1.0"
+
+pipeline {
+
+    agent any
+
+    environment {
+        IMAGE_NAME = "jenkins-app:build-${BUILD_NUMBER}"
+        CONTAINER_NAME = "mlops-container"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Amirthavarshini05/mlops1.git'
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                bat 'docker build -t %IMAGE_NAME% .'
+            }
+        }
+
+        stage('Deploy & Verify') {
+            steps {
+
+                bat '''
+                docker stop %CONTAINER_NAME% 2>NUL || exit 0
+                docker rm %CONTAINER_NAME% 2>NUL || exit 0
+                docker run -d --name %CONTAINER_NAME% -p 8081:80 %IMAGE_NAME%
+                '''
+
+                bat '''
+                docker ps
+                docker inspect --format="{{.State.Running}}" %CONTAINER_NAME%
+                '''
+            }
+        }
+    }
+}
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Deploy') {
+            steps {
+                bat '''
+                echo Deploying website...
+
+                copy /Y "%WORKSPACE%\\index.html" "C:\\inetpub\\wwwroot\\index.html"
+
+                echo Deployment completed successfully.
+                '''
+            }
+        }
+
+        stage('Validate') {
+            steps {
+                bat '''
+                echo Checking HTTP response...
+
+                curl -s -o NUL -w "HTTP Status: %%{http_code}\\n" http://localhost
+
+                curl -s -o NUL -w "%%{http_code}" http://localhost > status.txt
+
+                findstr /C:"200" status.txt > NUL
+
+                if errorlevel 1 (
+                    echo HTTP validation failed.
+                    exit /b 1
+                )
+
+                echo HTTP 200 OK - Validation successful.
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment and HTTP validation successful.'
+        }
+
+        failure {
+            echo 'Deployment or HTTP validation failed.'
+        }
+    }
+}
+
+pip install mlflow pandas scikit-learn matplotlib seaborn xgboost
